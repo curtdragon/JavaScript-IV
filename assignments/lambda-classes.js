@@ -27,6 +27,9 @@ class Instructor extends Person {
     gradeProject(student,subject) {
         return `${student.name} receives a perfect score on ${subject}`;
     }
+    tallyGrade(student) {
+        return student.grade += (Math.floor(Math.random() * 10)+1);
+    }
 }
 
 //Student Class
@@ -36,11 +39,15 @@ class Student extends Person {
         this.previousBackground = attributes.previousBackground;
         this.className = attributes.className;
         this.favSubjects = attributes.favSubjects;
-        this.grade = attributes.grade;
+        this.grade = Math.floor(Math.random() * 100) + 1;
     }
     listSubjects() {
-        return `${this.favSubjects}`;
+        console.log(`${this.name}'s favorite subjects: `);
+        for (let i= 0; i<this.favSubjects.length; i++) {
+            console.log(this.favSubjects[i]);
+        };
     }
+    
     PRAssignment(subject) {
         return `${this.name} has submitted a PR for ${subject}`;
     }
@@ -48,7 +55,10 @@ class Student extends Person {
         return `${this.name} has begun sprint challenge on ${subject}`;
     }
     graduate(){
-        return;
+        if (this.grade > 70){
+            return "Graduated";
+        }
+        else return "Keep going"
     }
 }
 
@@ -60,7 +70,7 @@ class ProjectManager extends Instructor {
         this.favInstructor = attributes.favInstructor;
     }
     standUp(channel) {
-        return `${this.name} announces to ${channel}, @channel stand up time!​​​;`
+        return `${this.name} announces to ${channel}, @channel stand up time!​​​`;
     }
     debugsCode(student,subject) {
         return `${this.name} debugs ${student.name}'s code in ${subject}`;
@@ -80,68 +90,68 @@ const curtis = new Student({
 
 const amber = new Student({
     name: "Amber Pittman",
-    age:1,
-    location:"",
-    gender: "",
-    previousBackground:"",
-    className:"",
-    favSubjects: [],
+    age:26,
+    location:"Atlanta, Georgia",
+    gender: "Female",
+    previousBackground:"Travel Blogger",
+    className:"WEBPT6",
+    favSubjects: ["Math","Computer Science","Cooking"],
 });
 
 const tyler = new Student({
     name:"Tyler Turnipseed",
-    age:1,
-    location:"",
-    gender:"",
-    previousBackground:"",
-    className:"",
-    favSubjects:[],
+    age:25,
+    location:"Avon, IN",
+    gender:"Male",
+    previousBackground:"Field Technician",
+    className:"WEBPT6",
+    favSubjects:["Math","Physics","Biology"],
 });
 
 //Creating Instructor objects
 const keiran = new Instructor({
     name: "Keiran Kozlowski",
-    age:1,
-    location:"",
-    gender:"",
-    specialty:"",
-    favLanguage:"",
+    age:22,
+    location:"The Fields of Jusctice",
+    gender:"Male",
+    specialty:"JavaScript",
+    favLanguage:"JavaScript",
     catchPhrase: "I love hotdogs",
 });
 
 const dan = new Instructor({
     name: "Dan Frehner",
-    age:1,
-    location:"",
-    gender:"",
-    specialty:"",
-    favLanguage:"",
+    age:30,
+    location:"Jackson, WY",
+    gender:"Male",
+    specialty:"React",
+    favLanguage:"JavaScript",
     catchPhrase: "Do you like my hat?",
 });
 
 //Creating Project Manager objects
 const abdul = new ProjectManager({
     name:"Abdul Ahmad",
-    age:1,
-    location:"",
-    gender:"",
-    specialty:"",
-    favLanguage:"",
-    catchPhrase: "",
-    gradClassName:"",
-    favInstructor:"",
+    age:30,
+    location:"Washington DC",
+    gender:"Male",
+    specialty:"JavaScript",
+    favLanguage:"React",
+    catchPhrase: "I'm not doing planks",
+    gradClassName:"FSW16",
+    favInstructor:"Ryan",
 });
 
 const john = new ProjectManager({
     name:"John Benedict Miranda",
-    age:1,
-    location:"",
-    gender:"",
-    specialty:"",
-    favLanguage:"",
-    catchPhrase: "",
-    gradClassName:"",
-    favInstructor:"",
+    age:32,
+    location:"California",
+    gender:"Male",
+    specialty:"CSS",
+    favLanguage:"Python",
+    catchPhrase: "Check this out",
+    gradClassName:"FSW19",
+    favInstructor:"Bruce",
 });
 
 //Instructor testing
@@ -156,13 +166,23 @@ console.log(tyler.sprintChallenge("Redux"));
 console.log(amber.favSubjects);
 console.log(curtis.name);
 console.log(curtis.speak());
-console.log(curtis.listSubjects());
+curtis.listSubjects();
+console.log("");
+console.log(curtis.grade);
 
 //PM Testing
 console.log(abdul.standUp("Webpt6_sprint03"));
 console.log(john.debugsCode(curtis,"JavaScript"));
 console.log(abdul.gradClassName);
 console.log(john.favInstructor);
+
+//Grading and Graduating
+do {
+    console.log(abdul.tallyGrade(curtis));
+    console.log(dan.tallyGrade(curtis));
+    console.log(curtis.graduate());
+} while (curtis.grade<70);
+
 
 
 
